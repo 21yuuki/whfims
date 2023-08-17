@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:api', 'cors']], function(){
+
+    // USER ROUTES
+    Route::prefix('users')->group(function(){
+        Route::get('/', [UserController::class, 'all']);
+        Route::post('/', [UserController::class, 'save']);
+        Route::get('/{id}', [UserController::class, 'find'])->where('id', '[0-9]+');
+        Route::delete('/{id}', [UserController::class, 'delete'])->where('id', '[0-9]+');
+        Route::get('/current-user', [UserController::class, 'getAuthenticatedUser']);
+        Route::post('/logout', [UserController::class, 'logout']);
+    });
 });
