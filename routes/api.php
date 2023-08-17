@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,5 +26,14 @@ Route::group(['middleware' => ['auth:api', 'cors']], function(){
         Route::delete('/{id}', [UserController::class, 'delete'])->where('id', '[0-9]+');
         Route::get('/current-user', [UserController::class, 'getAuthenticatedUser']);
         Route::post('/logout', [UserController::class, 'logout']);
+    });
+
+    // ROLE ROUTES
+    Route::prefix('roles')->group(function(){
+        Route::get('/', [RoleController::class, 'all']);
+        Route::post('/', [RoleController::class, 'save']);
+        Route::get('/{id}', [RoleController::class, 'find'])->where('id', '[0-9]+');
+        Route::delete('/{id}', [RoleController::class, 'delete'])->where('id', '[0-9]+');
+        Route::get('/role-users', [RoleController::class, 'getRoleUsers']);
     });
 });

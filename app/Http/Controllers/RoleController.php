@@ -2,64 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use Illuminate\Http\Request;
+use App\Models\Role;
+use App\Services\RoleService;
+use Log;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private $request;
+    private $service;
+
+    public function __construct(Request $request, RoleService $service)
     {
-        //
+        $this->request = $request;
+        $this->service = $service;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function all()
     {
-        //
+        return response()->json($this->service->all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function find(int $id)
     {
-        //
+        return response()->json($this->service->find($id));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Role $role)
+    public function save()
     {
-        //
+        return response()->json($this->service->save($this->request->toArray()));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Role $role)
+    public function delete(int $id)
     {
-        //
+        $deleted = $this->service->delete($id);
+        if($deleted === true) {
+            return response()->json(['message' => 'Role successfully deleted.'], 200);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Role $role)
+    public function getRoleUsers()
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Role $role)
-    {
-        //
+        return response()->json($this->service->all(['*'], ['users']));
     }
 }
