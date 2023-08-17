@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\RoleService;
+use App\Services\TableService;
 use Log;
 
-class RoleController extends Controller
+class TableController extends Controller
 {
     private $request;
     private $service;
 
-    public function __construct(Request $request, RoleService $service)
+    public function __construct(Request $request, TableService $service)
     {
         $this->request = $request;
         $this->service = $service;
@@ -36,12 +36,7 @@ class RoleController extends Controller
     {
         $deleted = $this->service->delete($id);
         if($deleted === true) {
-            return response()->json(['message' => 'Role successfully deleted.'], 200);
+            return response()->json(['message' => 'Table successfully deleted.'], 200);
         }
-    }
-
-    public function getRoleUsers()
-    {
-        return response()->json($this->service->all(['*'], ['users']));
     }
 }

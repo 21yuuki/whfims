@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +36,13 @@ Route::group(['middleware' => ['auth:api', 'cors']], function(){
         Route::get('/{id}', [RoleController::class, 'find'])->where('id', '[0-9]+');
         Route::delete('/{id}', [RoleController::class, 'delete'])->where('id', '[0-9]+');
         Route::get('/role-users', [RoleController::class, 'getRoleUsers']);
+    });
+
+    // TABLE ROUTES
+    Route::prefix('tables')->group(function(){
+        Route::get('/', [TableController::class, 'all']);
+        Route::post('/', [TableController::class, 'save']);
+        Route::get('/{id}', [TableController::class, 'find'])->where('id', '[0-9]+');
+        Route::delete('/{id}', [TableController::class, 'delete'])->where('id', '[0-9]+');
     });
 });
