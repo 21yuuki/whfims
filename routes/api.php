@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,5 +46,21 @@ Route::group(['middleware' => ['auth:api', 'cors']], function(){
         Route::post('/', [TableController::class, 'save']);
         Route::get('/{id}', [TableController::class, 'find'])->where('id', '[0-9]+');
         Route::delete('/{id}', [TableController::class, 'delete'])->where('id', '[0-9]+');
+    });
+
+    // CATEGORY ROUTES
+    Route::prefix('categories')->group(function(){
+        Route::get('/', [CategoryController::class, 'all']);
+        Route::post('/', [CategoryController::class, 'save']);
+        Route::get('/{id}', [CategoryController::class, 'find'])->where('id', '[0-9]+');
+        Route::delete('/{id}', [CategoryController::class, 'delete'])->where('id', '[0-9]+');
+    });
+
+    // PRODUCT ROUTES
+    Route::prefix('products')->group(function(){
+        Route::get('/', [ProductController::class, 'all']);
+        Route::post('/', [ProductController::class, 'save']);
+        Route::get('/{id}', [ProductController::class, 'find'])->where('id', '[0-9]+');
+        Route::delete('/{id}', [ProductController::class, 'delete'])->where('id', '[0-9]+');
     });
 });
