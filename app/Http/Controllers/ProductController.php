@@ -19,7 +19,7 @@ class ProductController extends Controller
 
     public function all()
     {
-        return response()->json($this->service->all());
+        return response()->json($this->service->all(['*'], ['category']));
     }
 
     public function find(int $id)
@@ -38,5 +38,10 @@ class ProductController extends Controller
         if($deleted === true) {
             return response()->json(['message' => 'Product successfully deleted.'], 200);
         }
+    }
+
+    public function getProductsByNameAndCategoryId()
+    {
+        return response()->json($this->service->getProductsByNameAndCategoryId($this->request->toArray()));
     }
 }

@@ -10,4 +10,10 @@ class TableService extends BaseService
     {
         parent::__construct($model);
     }
+
+    public function getAllAvailableTables(): array
+    {
+        $record = Table::where('availability', 1)->get();
+        return $record->toArray();
+    }
 }

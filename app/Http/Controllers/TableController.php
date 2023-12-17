@@ -39,4 +39,9 @@ class TableController extends Controller
             return response()->json(['message' => 'Table successfully deleted.'], 200);
         }
     }
+
+    public function getAllAvailableTables() 
+    {
+        return response()->json($this->service->getAllAvailableTables());
+    }
 }

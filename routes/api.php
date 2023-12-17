@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth:api', 'cors']], function(){
         Route::post('/', [TableController::class, 'save']);
         Route::get('/{id}', [TableController::class, 'find'])->where('id', '[0-9]+');
         Route::delete('/{id}', [TableController::class, 'delete'])->where('id', '[0-9]+');
+        Route::get('/availableTables', [TableController::class, 'getAllAvailableTables']);
     });
 
     // CATEGORY ROUTES
@@ -62,5 +63,6 @@ Route::group(['middleware' => ['auth:api', 'cors']], function(){
         Route::post('/', [ProductController::class, 'save']);
         Route::get('/{id}', [ProductController::class, 'find'])->where('id', '[0-9]+');
         Route::delete('/{id}', [ProductController::class, 'delete'])->where('id', '[0-9]+');
+        Route::post('/getProductsByNameAndCategoryId', [ProductController::class, 'getProductsByNameAndCategoryId']);
     });
 });
